@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - turbohive-network
+
+  api:
+    build: ./apps/api
+    command: npm run start:dev
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    ports:
+      - "3000:3000"
+    networks:
+      - turbohive-network
+
+  worker:
+    build: ./apps/worker
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    networks:
+      - turbohive-network
+
+networks:
+  turbohive-network:
+    driver: bridge
