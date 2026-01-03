@@ -5,10 +5,3 @@ export enum TaskStatus {
   FAILED = 'failed',
   DELAYED = 'delayed',
 }
-
-/**
-waiting	En cola
-active	Procesando
-completed	Finalizado
-failed	Error
-*/
