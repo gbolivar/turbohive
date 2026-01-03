@@ -1,6 +1,8 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { TasksService } from './tasks.service';
+import { CreateTaskDto } from './dto/create-task.dto';
 import { QueueService } from '../queue/queue.service';
+import { AppConfig } from '../config/app.config';
 
 @Controller('tasks')
 export class TasksController {
@@ -10,8 +12,8 @@ export class TasksController {
   ) {}
 
   @Post()
-  async create(@Body() body: any) {
-    return this.queueService.createTask('utility-job', body);
+  async create(@Body() body: CreateTaskDto) {
+    return this.queueService.createTask(AppConfig.queues.name, body);
   }
 
   @Get('statuses')

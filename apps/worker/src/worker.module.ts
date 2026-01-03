@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { UtilityProcessor } from './processors/utility.processor';
+import { TaskProcessor } from './processors/task.processor';
+import { AppConfig } from './config/app.config';
 
 @Module({
   imports: [
     BullModule.forRoot({
       connection: {
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT),
+        host: AppConfig.redis.host,
+        port: Number(AppConfig.redis.port),
       },
     }),
     BullModule.registerQueue({
-      name: 'utility-queue',
+      name: AppConfig.queues.name,
     }),
   ],
-  providers: [UtilityProcessor],
+  providers: [TaskProcessor],
 })
 export class WorkerModule {}
