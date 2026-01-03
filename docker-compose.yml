@@ -11,9 +11,8 @@ services:
   api:
     build: ./apps/api
     command: npm run start:dev
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+    env_file:
+      - .env
     depends_on:
       - redis
     ports:
@@ -23,9 +22,8 @@ services:
 
   worker:
     build: ./apps/worker
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+    env_file:
+      - .env
     depends_on:
       - redis
     networks:

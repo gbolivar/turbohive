@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TaskStatus } from './task-status.enum';
+import { TaskStatus } from './enum/task-status.enum';
 
 @Injectable()
 export class TasksService {

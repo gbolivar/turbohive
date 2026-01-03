@@ -1,4 +1,5 @@
 # Async Task-Based API Architecture
+
 ### NestJS + BullMQ + Redis
 
 This repository provides a **base implementation of an asynchronous, task-oriented API architecture**, inspired by Celery, designed for **NestJS** using **BullMQ** and **Redis**.
@@ -21,6 +22,7 @@ Instead of executing logic synchronously inside an HTTP request, the API:
 6. Clients query task status and result using the UUID
 
 This pattern is commonly used in:
+
 - Background processing
 - Data analysis
 - File generation
@@ -28,6 +30,14 @@ This pattern is commonly used in:
 - AI workloads
 - Automation tools
 - Utility APIs
+
+---
+
+### Bull Board Authentication
+
+Bull Board is protected using HTTP Basic Authentication.
+Credentials are configured via environment variables and intended
+for administrative access only.
 
 ---
 
@@ -62,7 +72,6 @@ Result stored in queue backend
 ↓
 GET /tasks/{taskId}
 
-
 ---
 
 ## 📦 Why not a traditional API?
@@ -86,11 +95,13 @@ GET /tasks/{taskId}
 ✅ Ideal for long-running tasks  
 
 ### 📦 Install
+
 ```bash
  git clone repo
  cd repo
  docker compose up -d --build
 ```
+
 ---
 
 ## 🧩 Task States
@@ -106,17 +117,70 @@ delayed    // scheduled for later execution
 ```
 
 ### 🔌 API Endpoints
+
 #### Create a task
+
 ```bash
   curl --request POST \
   --url http://localhost:3000/tasks \
   --header 'content-type: application/json' \
   --data '{
-  "type": "qr",
-  "data": "hola"
-}'
+  "strategy": "calculation",
+  "data": {
+    "operation": "add",
+    "v1": 10,
+    "v2": 30
+    }
+  }
+'
 ```
+
+```bash
+  curl --request POST \
+  --url http://localhost:3000/tasks \
+  --header 'content-type: application/json' \
+  --data '{
+    "strategy": "calculation",
+    "data": {
+     "operation": "subtract",
+     "v1": 110,
+     "v2": 30
+    }
+   }
+  '
+```
+
+```bash
+  curl --request POST \
+  --url http://localhost:3000/tasks \
+  --header 'content-type: application/json' \
+  --data '{
+  "strategy": "calculation",
+  "data": {
+    "operation": "multiply",
+    "v1": 6,
+    "v2": 7
+  }
+}
+'
+```
+
+```bash
+  curl --request POST \
+  --url http://localhost:3000/tasks \
+  --header 'content-type: application/json' \
+  --data '{
+  "strategy": "qr",
+  "data": {
+    "text": "https://ironsofts.com",
+    "size": 300
+  }
+}
+'
+```
+
 #### Response
+
 ```json
 {
   "taskId": "uuid",
@@ -125,12 +189,15 @@ delayed    // scheduled for later execution
 ```
 
 #### Get task status and result
+
 ```bash
 curl --request GET \
   --url http://localhost:3000/tasks/057b101e-6f82-4415-b3f3-b9f735a96b06
 }'
 ```
+
 #### Response
+
 ```json
 {
   "taskId": "uuid",
@@ -141,12 +208,15 @@ curl --request GET \
 ```
 
 #### Get available task statuses
+
 ```bash
 curl --request GET \
   --url http://localhost:3000/tasks/statuses
 }'
 ```
+
 #### Response
+
 ```json
 {
   "statuses": [
@@ -165,8 +235,9 @@ curl --request GET \
 ## 👤 Creator
 
 **Gregorio Bolívar**
-- 🔗 GitHub: https://github.com/gbolivar/turbohive  
-- 🔗 LinkedIn: https://www.linkedin.com/in/gregorio-bolivar/
+
+- 🔗 GitHub: <https://github.com/gbolivar/turbohive>  
+- 🔗 LinkedIn: <https://www.linkedin.com/in/gregorio-bolivar/>
 
 Software Engineer · Backend · DevSecOps  
 Argentina
