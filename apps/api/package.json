@@ -23,7 +23,7 @@
     "@bull-board/api": "^6.16.2",
     "@bull-board/express": "^6.16.2",
     "@nestjs/bullmq": "^11.0.4",
-    "@nestjs/common": "^11.0.1",
+    "@nestjs/common": "^11.1.12",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "bullmq": "^5.66.4",
